@@ -45,7 +45,7 @@ def get_std(data: list[float]) -> float:
     total = 0.0
     for n in data:
         total += (n - mean) ** 2
-    return math.sqrt(total / l)
+    return math.sqrt(total / (l - 1))
 
 
 def get_percentile(data: list[float], p: float) -> float:
@@ -58,3 +58,17 @@ def get_percentile(data: list[float], p: float) -> float:
         return sorted_data[lower]
     fraction = index - lower
     return sorted_data[lower] + fraction * (sorted_data[upper] - sorted_data[lower])
+
+
+def sigmoid(z: float) -> float:
+    if z >= 0:
+        return 1.0 / (1.0 + math.exp(-z))
+    ez = math.exp(z)
+    return ez / (1.0 + ez)
+
+
+def dot(weights: list, x: list) -> float:
+    total = 0.0
+    for w, xi in zip(weights, x):
+        total += w * xi
+    return total
